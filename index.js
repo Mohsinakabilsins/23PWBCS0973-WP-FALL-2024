@@ -132,10 +132,10 @@ mongoose.connect(mongo_URI, {
 })
 .then(() => {
     console.log("Successfully established a connection to MongoDB");
-    app.listen(PORT, () => {
-        console.log(`Server is listening on port ${PORT}`);
-    });
 })
 .catch((error) => {
     console.log("MongoDB connection failure:", error);
 });
+
+// Export the Express app as a handler for Vercel
+export default app;
