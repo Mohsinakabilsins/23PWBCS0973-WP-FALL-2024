@@ -126,15 +126,22 @@ app.get("/api/protected", verifyToken, async (req, res) => {
 // MongoDB connection
 const mongo_URI = process.env.MONGO_URI; // Load Mongo URI from .env file
 
-mongoose.connect(mongo_URI, {
-    serverSelectionTimeoutMS: 5000,
-    socketTimeoutMS: 45000,
-})
+// mongoose.connect(mongo_URI, {
+//     serverSelectionTimeoutMS: 5000,
+//     socketTimeoutMS: 45000,
+// })
+// .then(() => {
+//     console.log("Successfully established a connection to MongoDB");
+// })
+// .catch((error) => {
+//     console.log("MongoDB connection failure:", error);
+// });
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => {
-    console.log("Successfully established a connection to MongoDB");
+    console.log("MongoDB connected successfully");
 })
-.catch((error) => {
-    console.log("MongoDB connection failure:", error);
+.catch((err) => {
+    console.error("MongoDB connection error:", err);
 });
 
 // Export the Express app as a handler for Vercel
