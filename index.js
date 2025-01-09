@@ -2,7 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Signup from './Schemas/SignupSchema.js';
+
+import Signup from './Schemas/SignupSchema.js';  
+
+
 import { configDotenv } from 'dotenv';
 configDotenv();
 
