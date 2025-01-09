@@ -2,11 +2,10 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
-import Signup from './Schemas/SignupSchema.js';  
-
-
 import { configDotenv } from 'dotenv';
+import Signup from './Schemas/SignupSchema.js';  // Assuming this is the correct path
+
+// Load environment variables from .env file
 configDotenv();
 
 // Server setup
@@ -36,7 +35,6 @@ const verifyToken = (req, res, next) => {
 
 // Routes
 app.post('/api/signup', async (req, res) => {
-    console.log('Data from frontend:', req.body);
     const { name, email, password } = req.body;
 
     try {
@@ -45,7 +43,7 @@ app.post('/api/signup', async (req, res) => {
             return res.status(400).json({ message: "All fields are required" });
         }
 
-        // Check existing user
+        // Check if the user already exists
         const existingUser = await Signup.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "User already registered with this email" });
@@ -64,7 +62,7 @@ app.post('/api/signup', async (req, res) => {
             { expiresIn: '24h' }
         );
 
-        res.status(201).json({ 
+        res.status(201).json({
             message: "User registered successfully",
             token: token
         });
@@ -75,7 +73,6 @@ app.post('/api/signup', async (req, res) => {
 });
 
 app.post("/api/signin", async (req, res) => {
-    console.log("Data received from frontend signin:", req.body);
     const { email, password } = req.body;
 
     try {
@@ -127,7 +124,7 @@ app.get("/api/protected", verifyToken, async (req, res) => {
 });
 
 // MongoDB connection
-const mongo_URI = 'mongodb+srv://mo208292:YzdQWyRbzl6CY7uv@cluster0.3f8tt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const mongo_URI = process.env.MONGO_URI; // Load Mongo URI from .env file
 
 mongoose.connect(mongo_URI, {
     serverSelectionTimeoutMS: 5000,
@@ -140,5 +137,5 @@ mongoose.connect(mongo_URI, {
     });
 })
 .catch((error) => {
-    console.log(`MongoDB connection failure:`, error);
+    console.log("MongoDB connection failure:", error);
 });
