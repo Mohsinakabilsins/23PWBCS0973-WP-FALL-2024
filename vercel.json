@@ -8,13 +8,13 @@
     ],
     "routes": [
       {
-        "src": "/api/(.*)",
+        "src": "/(.*)",
         "dest": "index.js"
       }
     ],
     "env": {
-      "PORT": "5000",
-      "JWT_ACCESS_SECRET": "374623868256294728281942362837912389949849428468994194128999286"
+      "JWT_ACCESS_SECRET": "374623868256294728281942362837912389949849428468994194128999286",
+      "MONGO_URI": "mongodb+srv://mo208292:YzdQWyRbzl6CY7uv@cluster0.3f8tt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
     }
   }
   
